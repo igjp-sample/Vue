@@ -1,7 +1,8 @@
 <template>
   <nav>
     <router-link to="/grid">Grid</router-link> |
-    <router-link to="/chart">Chart</router-link>
+    <router-link to="/chart">Chart</router-link> |
+    <router-link to="/calendar">Calendar</router-link>
   </nav>
   <router-view />
 </template>

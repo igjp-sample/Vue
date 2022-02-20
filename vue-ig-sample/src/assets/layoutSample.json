@@ -1,0 +1,116 @@
+{
+	"version": "1.0",
+	"columns": [
+		{
+			"ColumnName": "Checked",
+			"Width": 50,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "",
+			"ColToRight": "Discontinued",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "Discontinued",
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "Checked",
+			"ColToRight": "OrderDate",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "OrderDate",
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "Discontinued",
+			"ColToRight": "ProductID",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "ProductID",
+			"Width": 80,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "OrderDate",
+			"ColToRight": "ProductName",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "ProductName",
+			"Width": 140,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "ProductID",
+			"ColToRight": "QuantityPerUnit",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "QuantityPerUnit",
+			"Width": 140,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "ProductName",
+			"ColToRight": "ReorderLevel",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "ReorderLevel",
+			"Width": 140,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "QuantityPerUnit",
+			"ColToRight": "UnitPrice",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "UnitPrice",
+			"Width": 140,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "ReorderLevel",
+			"ColToRight": "UnitsInStock",
+			"Summed" : false,
+			"Filtered": false
+		},
+		{
+			"ColumnName": "UnitsInStock",
+			"Width": 140,
+			"MinWidth": 0,
+			"IsStarSized": false,
+			"IsHidden": false,
+			"Pinned": 0,
+			"ColToLeft": "UnitPrice",
+			"ColToRight": "",
+			"Summed" : false,
+			"Filtered": false
+		}
+	],
+	"sortedColumns": [
+
+	],
+	"groupedColumns": [
+
+	],
+	"filterColumns": [
+
+	]
+}

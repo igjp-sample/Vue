@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "igniteui-webcomponents": "^1.0.0",
     "igniteui-webcomponents-charts": "^1.4.1",
     "igniteui-webcomponents-core": "^1.4.1",
     "igniteui-webcomponents-grids": "^1.4.1",
