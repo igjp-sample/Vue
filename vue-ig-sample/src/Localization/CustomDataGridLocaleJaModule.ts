@@ -1,5 +1,6 @@
 import { Localization } from 'igniteui-webcomponents-core';
 import { CustomDataGridLocaleJa } from './CustomDataGridLocaleJa';
+import { CustomGridCalendarLocaleJa } from './CustomGridCalendarLocaleJa';
 
 export class CustomDataGridLocaleJaModule {
     public static register() : void {
@@ -11,5 +12,6 @@ export class CustomDataGridLocaleJaModule {
 
         // This would force the grid to use the JA resource with the EN browser language.
         Localization.register("DataGrid-en", new CustomDataGridLocaleJa());
+        Localization.register("Calendar-en", new CustomGridCalendarLocaleJa());
     }
 }

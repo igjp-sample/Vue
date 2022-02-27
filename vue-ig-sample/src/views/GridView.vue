@@ -16,7 +16,7 @@
   >
     <igc-template-column isEditable="false" id="checked" field="Checked" width="50"></igc-template-column>
     <igc-text-column isEditable="false" id="discontinuedColumn" field="Discontinued" header-text="Discontinued"></igc-text-column>
-    <igc-date-time-column isEditable="false" id="orderDateColumn" field="OrderDate" header-text="OrderDate"></igc-date-time-column>
+    <igc-date-time-column id="orderDateColumn" field="OrderDate" header-text="OrderDate"></igc-date-time-column>
     <igc-numeric-column isEditable="false" id="productIDColumn" field="ProductID" header-text="ID" width="80"></igc-numeric-column>
     <igc-text-column id="productNameColumn" field="ProductName" header-text="ProductName" width="140"></igc-text-column>
     <igc-text-column id="quantityPerUnitColumn" field="QuantityPerUnit" header-text="QuantityPerUnit" width="140"></igc-text-column>
