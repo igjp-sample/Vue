@@ -173,7 +173,7 @@ export default defineComponent({
           const itemToUpdate = (e.cellInfo as IgcTemplateCellInfo).rowItem;
           let itemIndex = (this.$refs.grid as IgcDataGridComponent).actualDataSource.indexOfItem(itemToUpdate);
           itemToUpdate.Checked = newValue;
-          (this.$refs.grid as IgcDataGridComponent).notifySetItem(itemIndex, itemToUpdate, itemToUpdate);
+          //(this.$refs.grid as IgcDataGridComponent).notifySetItem(itemIndex, itemToUpdate, itemToUpdate);
           if(newValue)
           {
             (this.$refs.grid as IgcDataGridComponent).selectedItems.add(itemToUpdate);
@@ -204,7 +204,7 @@ export default defineComponent({
           this.dataSource.forEach(element => {
             element.Checked = newValue;
             let itemIndex = this.dataSource.indexOf(element);
-            (this.$refs.grid as IgcDataGridComponent).notifySetItem(itemIndex, element, element);
+            //(this.$refs.grid as IgcDataGridComponent).notifySetItem(itemIndex, element, element);
             if(newValue)
             {
               if(!(this.$refs.grid as IgcDataGridComponent).selectedItems.contains(element))
