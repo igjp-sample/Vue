@@ -1,4 +1,9 @@
 <template>
+  <div style="margin-bottom:1em;">
+    <button @click="load">Load</button>
+    <button @click="save">Save</button>
+  </div>
+
   <div style="border-right: 1px solid #bbb; border-left: 1px solid #bbb; border-top: 1px solid #bbb; display: flex; border-top-left-radius: 3px; border-top-right-radius: 3px;">
     <div id="extendHeader1" style="border-right: 1px solid #bbb; background: #f8f8f8;flex-grow: 1;"></div>
     <div id="extendHeader2" style="background: #FCF4A3; width:700px; font-size: .9em; padding: .2em 0;">製品情報</div>
@@ -32,6 +37,7 @@ import {
   IgcDataGridComponent,
   IgcTemplateHeaderComponent,
   IgcTextColumnComponent,
+  IgcDataGridToolbarComponent,
   IgcNumericColumnComponent,
   IgcDateTimeColumnComponent,
   IgcTemplateColumnComponent,
@@ -48,6 +54,7 @@ import {
   IgcGridGroupDescriptionsChangedEventArgs,
   IgcGridSortDescriptionsChangedEventArgs,
   ColumnSortDirection } from "igniteui-webcomponents-grids";
+
 export default defineComponent({
 
   name: "App",
@@ -93,18 +100,19 @@ export default defineComponent({
     headerTemplate.cellUpdating = this.onHeaderCellUpdating;
     TemplateColumn.header = headerTemplate;
 
-    console.log("mounted");
     const igcGrid = this.$refs.grid as IgcDataGridComponent;
-    console.log(igcGrid);
+
     igcGrid.dataSource = this.dataSource;
     igcGrid.cellValueChanging = this.onCellValueChanging;
     igcGrid.columnWidthChanged = this.onColumnWidthChanged; //列サイズ変更
-    igcGrid.actualColumnsChanged = this.onActualColumnsChanged; //列順変更
-    igcGrid.columnHiddenChanged = this.onColumnHiddenChanged; //列非表示
-    igcGrid.columnPinnedChanged = this.onColumnPinnedChanged; //ピン固定
-    igcGrid.filterExpressionsChanged = this.onFilterExpressionsChanged; //フィルター
-    igcGrid.groupDescriptionsChanged = this.onGroupDescriptionsChanged; //グループ
-    igcGrid.sortDescriptionsChanged = this.onSortDescriptionsChanged; //ソート
+    // igcGrid.actualColumnsChanged = this.onActualColumnsChanged; //列順変更
+    // igcGrid.columnHiddenChanged = this.onColumnHiddenChanged; //列非表示
+    // igcGrid.columnPinnedChanged = this.onColumnPinnedChanged; //ピン固定
+    // igcGrid.filterExpressionsChanged = this.onFilterExpressionsChanged; //フィルター
+    // igcGrid.groupDescriptionsChanged = this.onGroupDescriptionsChanged; //グループ
+    // igcGrid.sortDescriptionsChanged = this.onSortDescriptionsChanged; //ソート
+
+    this.storedLayout = JSON.parse(igcGrid.saveLayout());
 
     this.dataSource.forEach(element => {
       if(element.Checked)
@@ -116,41 +124,36 @@ export default defineComponent({
   },
 
   methods: {
-    onSortDescriptionsChanged(sender: any, args: IgcGridSortDescriptionsChangedEventArgs) {
-      const igcGrid = this.$refs.grid as IgcDataGridComponent;
-      const layout = igcGrid.saveLayout();
-      debugger;
-      console.log("ソート");
-    },
-    onGroupDescriptionsChanged(sender: any, args: IgcGridGroupDescriptionsChangedEventArgs) {
-      console.log("グループ");
-    },
-    onFilterExpressionsChanged(sender: any, args: IgcGridFilterExpressionsEventArgs) {
-      console.log("フィルター");
-    },
-    onColumnPinnedChanged(sender: any, args: IgcColumnPinnedChangedEventArgs) {
-      console.log("ピン固定");
-    },
-    onColumnHiddenChanged(sender: any, args: IgcColumnHiddenChangedEventArgs) {
-      console.log("列非表示");
-    },
-    onActualColumnsChanged(sender: any, args: IgcGridColumnsChangedEventArgs) {
-      console.log("列順変更");
-    },
+    // onSortDescriptionsChanged(sender: any, args: IgcGridSortDescriptionsChangedEventArgs) {
+    //   console.log("ソート");
+    // },
+    // onGroupDescriptionsChanged(sender: any, args: IgcGridGroupDescriptionsChangedEventArgs) {
+    //   console.log("グループ");
+    // },
+    // onFilterExpressionsChanged(sender: any, args: IgcGridFilterExpressionsEventArgs) {
+    //   console.log("フィルター");
+    // },
+    // onColumnPinnedChanged(sender: any, args: IgcColumnPinnedChangedEventArgs) {
+    //   console.log("ピン固定");
+    // },
+    // onColumnHiddenChanged(sender: any, args: IgcColumnHiddenChangedEventArgs) {
+    //   console.log("列非表示");
+    // },
+    // onActualColumnsChanged(sender: any, args: IgcGridColumnsChangedEventArgs) {
+    //   console.log("列順変更");
+    // },
     onColumnWidthChanged(sender: any, args: IgcGridColumnWidthChangedEventArgs) {
-      console.log("列サイズ変更");
-      const v = Math.floor(args.newWidth.value);
-      args.column.width.value = v;
-      const igcGrid = this.$refs.grid as IgcDataGridComponent;
-      let newWidth = 0;
-      igcGrid.contentColumns.forEach(element => {
-        if (element.isEditable) {
-          newWidth += Math.floor(element.width.value)
-        }
+      let currentColumns = JSON.parse((this.$refs.grid as IgcDataGridComponent).saveLayout()).columns;
+      const tagetColumns = ['ProductName','QuantityPerUnit','ReorderLevel','UnitPrice','UnitsInStock'];
+      let colcWidth = 0;
+      tagetColumns.forEach(e => {
+        const targetColumn = currentColumns.filter(function( obj:any ) {
+            return obj.ColumnName === e;
+        });
+        colcWidth += targetColumn[0].Width;
       });
-      console.log(newWidth)
       const extendHeader2 = document.getElementById("extendHeader2") as HTMLDivElement;
-      extendHeader2.style.width = newWidth + 'px';
+      extendHeader2.style.width = colcWidth + 'px';
     },
     onDataBound(sender: any, args: IgcDataBindingEventArgs) {
       if(args.cellInfo.rowItem.IsEdited === true){
@@ -158,6 +161,17 @@ export default defineComponent({
       }
     },
     onCellValueChanging(s: IgcDataGridComponent, e: IgcGridCellValueChangingEventArgs) {
+      console.log(e);
+      //バリデーション処理
+      if (e.column != null && e.column.field == "UnitPrice") {
+        if (e.newValue != null && e.newValue > 50)
+          {
+              (this.$refs.grid as IgcDataGridComponent).setEditError(e.editID, "50以下の数値を入力してください");
+              //(this.$refs.grid as IgcDataGridComponent).rejectEdit(e.editID);
+              return false;
+          }
+      }
+
       e.cellInfo.rowItem.IsEdited = true;
     },
     onCellUpdating(s: IgcTemplateColumnComponent, e: IgcTemplateCellUpdatingEventArgs): void {
@@ -228,6 +242,24 @@ export default defineComponent({
         }
         checkAll.style.pointerEvents = "auto";
       }
+    },
+    load() {
+      //console.log(JSON.stringify(this.storedLayout, null, 2));
+      (this.$refs.grid as IgcDataGridComponent).loadLayout(JSON.stringify(this.storedLayout, null, 2));
+    },
+    save() {
+      //列順とピン固定のみ保存
+      const currentLayout = JSON.parse((this.$refs.grid as IgcDataGridComponent).saveLayout()).columns;
+      let storedLayout:any = this.storedLayout;
+      currentLayout.forEach(function (arrayItem:any) {
+        const objIndex = storedLayout.columns.findIndex(function (obj:any) {
+          if (obj.ColumnName == arrayItem.ColumnName) return 1;
+        });
+        storedLayout.columns[objIndex].Pinned = arrayItem.Pinned;
+        storedLayout.columns[objIndex].ColToRight = arrayItem.ColToRight;
+        storedLayout.columns[objIndex].ColToLeft = arrayItem.ColToLeft;
+      });
+      this.storedLayout = storedLayout;
     }
   },
 
@@ -290,6 +322,14 @@ export default defineComponent({
           Checked: false,
         },
       ],
+      storedLayout:
+      {
+        columns: [],
+        filterColumns:[],
+        groupedColumns:[],
+        sortedColumns:[],
+        version: ""
+      },
     };
   },
 });
