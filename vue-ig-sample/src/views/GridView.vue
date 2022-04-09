@@ -88,6 +88,9 @@ export default defineComponent({
 
     const orderDateColumn = document.getElementById("orderDateColumn") as IgcDateTimeColumnComponent;
     orderDateColumn.dataBound = this.onDataBound;
+    const orderDateHeaderTemplate = new IgcTemplateHeaderComponent();
+    orderDateHeaderTemplate.cellUpdating = this.onOrderDateColumnHeaderCellUpdating;
+    orderDateColumn.header = orderDateHeaderTemplate;
 
     const productIDColumn = document.getElementById("productIDColumn") as IgcNumericColumnComponent;
     productIDColumn.dataBound = this.onDataBound;
@@ -241,6 +244,18 @@ export default defineComponent({
           content.parentElement.style.pointerEvents = "none";
         }
         checkAll.style.pointerEvents = "auto";
+      }
+    },
+    onOrderDateColumnHeaderCellUpdating(sender: IgcTemplateHeaderComponent, args: IgcTemplateHeaderCellUpdatingEventArgs): void{
+      const content = args.content as HTMLDivElement;
+      let el: HTMLSpanElement | null = null;
+      if (content.childElementCount === 0) {
+        el = document.createElement('span');
+        el.innerText = "line1\nline2";
+        el.style.fontSize = '12px';
+        content.appendChild(el);
+        content.style.lineHeight = '1';
+        content.style.paddingTop = '2px';
       }
     },
     load() {
