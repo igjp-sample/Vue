@@ -2,32 +2,17 @@
   <div>
     <igc-category-chart id="chart" width="100%" height="500px" ref="chart">
     </igc-category-chart>
-
-    <igc-data-grid
-      height="500px"
-      width="100%"
-      auto-generate-columns="true"
-      ref="grid"
-    >
-    </igc-data-grid>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { IgcDataGridComponent } from "igniteui-webcomponents-grids";
 import { IgcCategoryChartComponent } from "igniteui-webcomponents-charts";
 export default defineComponent({
   name: "App",
 
   components: {},
   mounted() {
-    // グリッドにデータソースを設定
-    const igcGrid = this.$refs.grid as IgcDataGridComponent;
-    console.log(igcGrid);
-    igcGrid.dataSource = this.dataSource;
-
-    // チャートにデータソースを設定
     const igcChart = this.$refs.chart as IgcCategoryChartComponent;
     igcChart.dataSource = this.dataSource;
   },
